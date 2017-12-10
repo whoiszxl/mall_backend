@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 /**
  * 
@@ -28,6 +29,17 @@ public class Book extends DomainImpl{
 
 	@OneToMany(mappedBy = "book")
 	private List<BookAuthor> authors;
+	
+	@Version
+	private int version;
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 
 	public List<BookAuthor> getAuthors() {
 		return authors;
