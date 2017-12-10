@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 
 /**
@@ -15,11 +17,13 @@ import javax.persistence.OneToMany;
  *
  */
 @Entity
+@NamedEntityGraph(name = "Book.fetch.category.and.author",
+attributeNodes = {@NamedAttributeNode("category"),@NamedAttributeNode("authors")})
 public class Book extends DomainImpl{
 	
 	private String name;
 	
-	@ManyToOne(fetch = FetchType.LAZY) //图书对分类，为多对一,懒加载
+	@ManyToOne //图书对分类，为多对一,懒加载
 	private Category category;
 
 	@OneToMany(mappedBy = "book")

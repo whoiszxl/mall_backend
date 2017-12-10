@@ -2,6 +2,7 @@ package com.whoiszxl.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
@@ -16,5 +17,6 @@ import com.whoiszxl.domain.Book;
  */
 public interface BookRepository extends JpaRepository<Book, Long>,JpaSpecificationExecutor<Book>{//泛型参数: args1:操作实体表，args2:主键类型
 	
+	@EntityGraph("Book.fetch.category.and.author")
 	List<Book> findByName(String name);
 }

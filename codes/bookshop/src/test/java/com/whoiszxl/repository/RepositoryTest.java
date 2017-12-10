@@ -15,6 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.whoiszxl.BaseTest;
 import com.whoiszxl.domain.Book;
@@ -23,6 +26,9 @@ public class RepositoryTest extends BaseTest{
 
 	@Autowired
 	private BookRepository bookRepository;
+	
+	@Autowired
+	private PlatformTransactionManager transactionManager;
 	
 	@Test
 	public void findBookTest() throws Exception {
@@ -57,5 +63,16 @@ public class RepositoryTest extends BaseTest{
 		};
 		
 		bookRepository.findOne(spec);
+	}
+	
+	@Test
+	public void chijiuhuaTest() {
+		TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());//开启事务
+		Book book = bookRepository.findOne(3L);
+		book.setName("白鹿原");
+		bookRepository.saveAndFlush(book);//立即刷新同步数据库
+		
+		transactionManager.commit(status);//提交事务
+		
 	}
 }

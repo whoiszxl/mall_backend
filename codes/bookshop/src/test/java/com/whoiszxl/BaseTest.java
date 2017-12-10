@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringRunner.class)//使用SpringRunner运行测试用例
 @SpringBootTest(classes = BookShopApplication.class)//告诉程序测试的入口在哪
-@Transactional//测试结束后，数据会被rollback
+//@Transactional//测试结束后，数据会被rollback
 public class BaseTest {
 	
 }
