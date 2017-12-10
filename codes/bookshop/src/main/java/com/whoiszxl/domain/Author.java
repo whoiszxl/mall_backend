@@ -14,6 +14,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,11 +26,8 @@ import com.whoiszxl.enums.Sex;
  *
  */
 @Entity
-public class Author {
+public class Author extends DomainImpl{
 
-	@Id
-	@GeneratedValue
-	private Long id;
 	
 	private String name;
 	
@@ -50,6 +49,36 @@ public class Author {
 	
 	@ElementCollection //映射对象，新建一张带Adress属性的表
 	private List<Address> addresses;
+	
+	@OneToMany(mappedBy = "author")
+	private List<BookAuthor> books;
+	
+	@OneToOne
+	private AuthorInfo info;
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public List<BookAuthor> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<BookAuthor> books) {
+		this.books = books;
+	}
+
+	public AuthorInfo getInfo() {
+		return info;
+	}
+
+	public void setInfo(AuthorInfo info) {
+		this.info = info;
+	}
 
 	public List<String> getHobbies() {
 		return hobbies;
@@ -65,14 +94,6 @@ public class Author {
 
 	public void setSex(Sex sex) {
 		this.sex = sex;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {

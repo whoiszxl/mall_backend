@@ -15,6 +15,6 @@ public class DatabaseNamingStrategy extends ImplicitNamingStrategyJpaCompliantIm
 
 	@Override
 	protected Identifier toIdentifier(String stringForm, MetadataBuildingContext buildingContext) {
-		return super.toIdentifier("zxl_" + stringForm, buildingContext);
+		return super.toIdentifier(stringForm, buildingContext);
 	}
 }

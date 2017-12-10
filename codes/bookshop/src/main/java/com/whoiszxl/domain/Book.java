@@ -1,10 +1,13 @@
 package com.whoiszxl.domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * 
@@ -12,23 +15,22 @@ import javax.persistence.ManyToOne;
  *
  */
 @Entity
-public class Book {
-	
-	@Id
-	@GeneratedValue
-	private Long id;
+public class Book extends DomainImpl{
 	
 	private String name;
 	
 	@ManyToOne(fetch = FetchType.LAZY) //图书对分类，为多对一,懒加载
 	private Category category;
 
-	public Long getId() {
-		return id;
+	@OneToMany(mappedBy = "book")
+	private List<BookAuthor> authors;
+
+	public List<BookAuthor> getAuthors() {
+		return authors;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setAuthors(List<BookAuthor> authors) {
+		this.authors = authors;
 	}
 
 	public String getName() {

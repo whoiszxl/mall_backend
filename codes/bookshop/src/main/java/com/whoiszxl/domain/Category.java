@@ -20,11 +20,11 @@ import javax.persistence.Transient;
  */
 //@Table(name = "zxl_vategory") //设置对应的表名
 @Entity //设置为数据库实体
-public class Category {
+public class Category extends DomainImpl{
 	
-	@Id //设置为主键ID
-	@GeneratedValue //设置为自增
-	private Long id;
+	//	@Id //设置为主键ID
+	//	@GeneratedValue //设置为自增
+	//	private Long id;
 
 	@Basic //字段默认basic注解
 	@Column(length = 10,nullable = false,unique = true)
@@ -35,14 +35,6 @@ public class Category {
 	
 	@OneToMany(mappedBy = "category") //分类对书 一对多,放弃一对多的管理关系
 	private List<Book> books;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
