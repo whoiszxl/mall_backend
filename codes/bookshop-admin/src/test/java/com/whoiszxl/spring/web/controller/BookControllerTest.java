@@ -2,6 +2,8 @@ package com.whoiszxl.spring.web.controller;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,10 +41,21 @@ public class BookControllerTest {
 	@Test
 	public void whenBookQuerySuccess() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/book")//发送get请求到/book中
-				.param("name", "chenhuixian")//带参数
+				.param("keyword", "chenhuixian")//带参数
+				.param("pageSize", "100")
 				.accept(MediaType.APPLICATION_JSON_UTF8))//类型
 				.andExpect(MockMvcResultMatchers.status().isOk())//返回状态必须为200
 				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(3));//返回的长度要为3
+	}
+	
+	@Test
+	public void whenGetInfoSuccess() throws Exception {
+		String result = mockMvc.perform(MockMvcRequestBuilders.get("/book/1")
+								.accept(MediaType.APPLICATION_JSON_UTF8))
+								.andExpect(status().isOk())
+								.andExpect(jsonPath("$.name").value("绿毛水怪"))
+								.andReturn().getResponse().getContentAsString();
+		System.out.println(result);
 	}
 
 }
